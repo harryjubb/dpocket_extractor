@@ -24,7 +24,11 @@ parser.add_argument(
 )
 
 args = parser.parse_args()
+
+# MODIFIED PDB WITH FAKE "LIGAND" RESIDUE TO DEFINE POCKET
 mod_pdb = args.pdb + '_mod'
+
+# PREFIX FOR DPOCKET OUTPUT
 dpocket_prefix = os.path.split(args.pdb)[-1].replace('.', '_')
 
 structure = PDBParser().get_structure('_', args.pdb)
@@ -75,6 +79,7 @@ for entity in args.entities:
 # ADD FAKE RESIDUE TO FIRST CHAIN IN STRUCTURE
 structure[0].get_list()[0].add(fake)
 
+# SAVE MODIFIED PDB
 io = PDBIO()
 io.set_structure(structure)
 io.save(mod_pdb)
